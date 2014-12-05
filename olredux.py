@@ -8,6 +8,8 @@
 
 import time
 import random
+import Thing
+import Character
 from graphics import *
 
 
@@ -43,199 +45,18 @@ WINDOW_RIGHTPANEL = 0
 #
 
 
-#
-# The root object
-#
-class Root (object):
-    # default predicates
-
-    # is this object a Thing?
-    def is_thing (self):
-        return False
-
-    # is this object a Character?
-    def is_character (self):
-        return False
-
-    # is this object the Player?
-    def is_player (self):
-        return False
-
-    # can this object be walked over during movement?
-    def is_walkable (self):
-        return False
 
 
-# A thing is something that can be interacted with and by default
-# is not moveable or walkable over
-#
-#   Thing(name,description)
-#
-# A thing defines a default sprite in field _sprite
-# To create a new kind of thing, subclass Thing and 
-# assign it a specific sprite (see the OlinStatue below).
-# 
-class Thing (Root):
-    def __init__ (self,name,desc):
-        self._name = name
-        self._description = desc
-        self._sprite = Text(Point(TILE_SIZE/2,TILE_SIZE/2),"?")
-        log("Thing.__init__ for "+str(self))
-
-    def __str__ (self):
-        return "<"+self.name()+">"
-
-    # return the sprite for display purposes
-    def sprite (self):
-        return self._sprite
-
-    # return the name
-    def name (self):
-        return self._name
-
-    # return the position of the thing in the level array
-    def position (self):
-        return (self._x,self._y)
-        
-    # return the description
-    def description (self):
-        return self._description
-
-    # creating a thing does not put it in play -- you have to 
-    # call materialize, passing in the screen and the position
-    # where you want it to appear
-    def materialize (self,screen,x,y):
-        screen.add(self,x,y)
-        self._screen = screen
-        self._x = x
-        self._y = y
-        return self
-
-    def is_thing (self):
-        return True
-
-    def is_walkable (self):
-        return False
 
 
-#
-# Example of a kind of thing with its specific sprite
-# (here, a rather boring gray rectangle.)
-#
-class OlinStatue (Thing):
-    def __init__ (self):
-        Thing.__init__(self,"Olin statue","A statue of F. W. Olin")
-        rect = Rectangle(Point(1,1),Point(TILE_SIZE-1,TILE_SIZE-1))
-        rect.setFill("gray")
-        rect.setOutline("gray")
-        self._sprite = rect
 
 
-#
-# Characters represent persons and animals and things that move
-# about possibly proactively
-#
-class Character (Thing):
-    def __init__ (self,name,desc):
-        Thing.__init__(self,name,desc)
-        log("Character.__init__ for "+str(self))
-        rect = Rectangle(Point(1,1),
-                         Point(TILE_SIZE-1,TILE_SIZE-1))
-        rect.setFill("red")
-        rect.setOutline("red")
-        self._sprite = rect
-
-    # A character has a move() method that you should implement
-    # to enable movement
-
-    def move (self,dx,dy):
-        # WRITE ME!
-        pass   
-
-    def is_character (self):
-        return True
-
-    def is_walkable (self):
-        return False
 
 
-# 
-# A Rat is an example of a character which defines an event that makes
-# the rat move, so that it can be queued into the event queue to enable
-# that behavior. (Which is right now unfortunately not implemented.)
-#
-class Rat (Character):
-    def __init__ (self,name,desc):
-        Character.__init__(self,name,desc)
-        log("Rat.__init__ for "+str(self))
-        rect = Rectangle(Point(1,1),
-                         Point(TILE_SIZE-1,TILE_SIZE-1))
-        rect.setFill("red")
-        rect.setOutline("red")
-        self._sprite = rect
-        self._direction = random.randrange(4)
-
-    # A helper method to register the Rat with the event queue
-    # Call this method with a queue and a time delay before
-    # the event is called
-    # Note that the method returns the object itself, so we can
-    # use method chaining, which is cool (though not as cool as
-    # bowties...)
-
-    def register (self,q,freq):
-        self._freq = freq
-        q.enqueue(freq,self)
-        return self
-
-    # this gets called from event queue when the time is right
-
-    def event (self,q):
-        # WRITE ME!
-        log("event for "+str(self))
-        
-        
 
 
-#
-# The Player character
-#
-class Player (Character):
-    def __init__ (self,name,window,screen,cx,cy,things):
-        Character.__init__(self,name,"Yours truly")
-        log("Player.__init__ for "+str(self))
-        pic = 't_android_red.gif'
-        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
-        self._window = window
-        self._screen = screen
-        self._cx = cx
-        self._cy = cy
-        self._things = things
 
-    def is_player (self):
-        return True
 
-    # The move() method of the Player is called when you 
-    # press movement keys. 
-    # It is different enough from movement by the other
-    # characters that you'll probably need to overwrite it.
-    # In particular, when the Player move, the screen scrolls,
-    # something that does not happen for other characters
-
-    def move (self,dx,dy):
-        #self._sprite.move(dx,dy)
-        tempx = self._cx 
-        tempy = self._cy
-        tempx += dx
-        tempy += dy
-        if self._screen.tile(tempx,tempy) == 1 or self._screen.tile(tempx,tempy) == 0:
-            for j in range(len(self._things)):
-                self._things[j]._sprite.move(-dx*24,-dy*24)
-            for i in range(len(self._screen._things)):
-                self._screen._things[i].move(-dx*24,-dy*24)
-            self._cx = tempx
-            self._cy = tempy
-        else:
-            print("That's a tree!")
 
 
 #############################################################
