@@ -5,6 +5,8 @@ Created on Fri Dec 05 14:50:36 2014
 @author: jmorris
 """
 
+from Thing import *
+
 class Equipment (Thing):
     def __init__ (self,name,desc):
         Thing.__init__(self,name,desc)

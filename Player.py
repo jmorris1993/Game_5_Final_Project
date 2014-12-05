@@ -38,6 +38,7 @@ class Player (Character):
         tempy = self._cy
         tempx += dx
         tempy += dy
+        print(self._screen.tile(tempx,tempy))
         if self._screen.tile(tempx,tempy) == 1 or self._screen.tile(tempx,tempy) == 0:
             for j in range(len(self._things)):
                 self._things[j]._sprite.move(-dx*24,-dy*24)

@@ -5,6 +5,8 @@ Created on Fri Dec 05 14:52:21 2014
 @author: jmorris
 """
 
+from Equipment import *
+
 class Sword (Equipment):
     def __init__ (self,name,desc):
         Thing.__init__(self,name,desc)

@@ -5,6 +5,8 @@ Created on Fri Dec 05 14:49:55 2014
 @author: jmorris
 """
 
+from Items import *
+
 class Money (Items):
     def __init__ (self,name,desc):
         Thing.__init__(self,name,desc)

@@ -2,7 +2,7 @@
 #
 # Olinland Redux
 #
-# Scaffolding to the final project for Game Programming
+# The final project for Game Programming
 #
 #
 
@@ -21,32 +21,7 @@ from Rat import *
 from Thing import *
 from Character import *
 from graphics import *
-
-
-
-# Tile size of the level
-LEVEL_WIDTH = 100
-LEVEL_HEIGHT = 100
-
-CX = 25
-CY = 25
-
-# Tile size of the viewport (through which you view the level)
-VIEWPORT_WIDTH = 21
-VIEWPORT_HEIGHT = 21   
-
-# Pixel size of a tile (which gives you the size of the window)
-TILE_SIZE = 24
-
-# Pixel size of the viewport
-WINDOW_WIDTH = TILE_SIZE * VIEWPORT_WIDTH
-WINDOW_HEIGHT = TILE_SIZE * VIEWPORT_HEIGHT
-
-# Pixel size of the panel on the right where you can display stuff
-WINDOW_RIGHTPANEL = 0
-
-
-
+from UniVars import *
 #
 # A Screen is a representation of the level displayed in the 
 # viewport, with a representation for all the tiles and a 
@@ -95,6 +70,9 @@ class Screen (object):
                 elif self.tile(x,y) == 2:
                     elt.setFill('sienna')
                     elt.setOutline('sienna')
+                elif self.tile(x,y) == 3:
+                    elt.setFill('darkgrey')
+                    elt.setOutline('darkgrey')
                 self._things.append(elt)
                 elt.draw(window)
 
@@ -116,17 +94,12 @@ class Screen (object):
     def window (self):
         return self._window
 
-
-
-
 # A helper function that lets you log information to the console
 # with some timing information. I found this super useful to 
 # debug tricky event-based problems.
 #
 def log (message):
     print time.strftime("[%H:%M:%S]",time.localtime()),message
-
-    
 
 #############################################################
 # 
@@ -189,8 +162,6 @@ class CheckInput (object):
             self._player.move(dx,dy)
         q.enqueue(1,self)
 
-
-#
 # Create the right-side panel that can be used to display interesting
 # information to the player
 #
@@ -206,7 +177,6 @@ def create_panel (window):
     fg.setStyle("italic")
     fg.setFill("red")
     fg.draw(window)
-
 
 #
 # The main function

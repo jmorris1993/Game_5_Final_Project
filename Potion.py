@@ -5,6 +5,8 @@ Created on Fri Dec 05 14:48:02 2014
 @author: jmorris
 """
 
+from Items import *
+
 class Potion (Items):
     def __init__ (self,name,desc):
         Thing.__init__(self,name,desc)
