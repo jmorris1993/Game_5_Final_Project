@@ -39,7 +39,16 @@ class Rat (Character):
     # this gets called from event queue when the time is right
 
     def event (self,q):
-        # WRITE ME!
+        self._direction = random.randrange(4)
+        print self._direction
+        if self._direction == 0:
+            self.move(24,0)
+        elif self._direction == 1:
+            self.move(-24,0)
+        elif self._direction == 2:
+            self.move(0,24)
+        elif self._direction == 3:
+            self.move(0,-24)
         log("event for "+str(self))
         
         

@@ -25,8 +25,7 @@ class Character (Thing):
     # to enable movement
 
     def move (self,dx,dy):
-        # WRITE ME!
-        pass   
+        self._sprite.move(dx,dy)   
 
     def is_character (self):
         return True

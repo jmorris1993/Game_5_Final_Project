@@ -202,10 +202,10 @@ def main ():
     q = EventQueue()
 
     os = OlinStatue().materialize(scr,20,20)
-    pinky = Rat("Pinky","A rat").register(q,40).materialize(scr,30,30)
+    pinky = Rat("Pinky","A rat").register(q,10).materialize(scr,30,30)
     brain = Rat("Brain","A rat with a big head").register(q,60).materialize(scr,10,30)
     world_things = [os,pinky,brain]
-    create_panel(window)
+    #create_panel(window)
 
     p = Player("...what's your name, bub?...",window,scr,CX,CY,world_things).materialize(scr,25,25)
 
