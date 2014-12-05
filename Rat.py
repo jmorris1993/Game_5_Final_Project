@@ -4,6 +4,9 @@ Created on Fri Dec 05 14:33:46 2014
 
 @author: jmorris
 """
+ 
+from Character import *
+import random
 
 # 
 # A Rat is an example of a character which defines an event that makes

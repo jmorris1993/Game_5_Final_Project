@@ -5,6 +5,8 @@ Created on Fri Dec 05 14:35:14 2014
 @author: jmorris
 """
 
+from Character import *
+
 #
 # The Player character
 #

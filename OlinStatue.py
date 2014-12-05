@@ -5,6 +5,8 @@ Created on Fri Dec 05 14:33:20 2014
 @author: jmorris
 """
 
+from Thing import *
+
 #
 # Example of a kind of thing with its specific sprite
 # (here, a rather boring gray rectangle.)
