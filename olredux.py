@@ -15,6 +15,9 @@ from graphics import *
 LEVEL_WIDTH = 50
 LEVEL_HEIGHT = 50
 
+CX = 25
+CY = 25
+
 # Tile size of the viewport (through which you view the level)
 VIEWPORT_WIDTH = 21
 VIEWPORT_HEIGHT = 21   
@@ -27,7 +30,7 @@ WINDOW_WIDTH = TILE_SIZE * VIEWPORT_WIDTH
 WINDOW_HEIGHT = TILE_SIZE * VIEWPORT_HEIGHT
 
 # Pixel size of the panel on the right where you can display stuff
-WINDOW_RIGHTPANEL = 200
+WINDOW_RIGHTPANEL = 0
 
 
 #############################################################
@@ -197,11 +200,16 @@ class Rat (Character):
 # The Player character
 #
 class Player (Character):
-    def __init__ (self,name):
+    def __init__ (self,name,window,screen,cx,cy,things):
         Character.__init__(self,name,"Yours truly")
         log("Player.__init__ for "+str(self))
         pic = 't_android_red.gif'
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
+        self._window = window
+        self._screen = screen
+        self._cx = cx
+        self._cy = cy
+        self._things = things
 
     def is_player (self):
         return True
@@ -214,9 +222,20 @@ class Player (Character):
     # something that does not happen for other characters
 
     def move (self,dx,dy):
-        # WRITE ME!
-        pass
-
+        #self._sprite.move(dx,dy)
+        tempx = self._cx 
+        tempy = self._cy
+        tempx += dx
+        tempy += dy
+        if self._screen.tile(tempx,tempy) == 1 or self._screen.tile(tempx,tempy) == 0:
+            for j in range(len(self._things)):
+                self._things[j]._sprite.move(-dx*24,-dy*24)
+            for i in range(len(self._screen._things)):
+                self._screen._things[i].move(-dx*24,-dy*24)
+            self._cx = tempx
+            self._cy = tempy
+        else:
+            print("That's a tree!")
 
 
 #############################################################
@@ -310,6 +329,7 @@ class Screen (object):
                 elif self.tile(x,y) == 2:
                     elt.setFill('sienna')
                     elt.setOutline('sienna')
+                self._things.append(elt)
                 elt.draw(window)
 
     # return the tile at a given tile position
@@ -440,18 +460,18 @@ def main ():
     level = Level()
     log ("level created")
 
-    scr = Screen(level,window,25,25)
+    scr = Screen(level,window,CX,CY)
     log ("screen created")
 
     q = EventQueue()
 
-    OlinStatue().materialize(scr,20,20)
-    Rat("Pinky","A rat").register(q,40).materialize(scr,30,30)
-    Rat("Brain","A rat with a big head").register(q,60).materialize(scr,10,30)
-
+    os = OlinStatue().materialize(scr,20,20)
+    pinky = Rat("Pinky","A rat").register(q,40).materialize(scr,30,30)
+    brain = Rat("Brain","A rat with a big head").register(q,60).materialize(scr,10,30)
+    world_things = [os,pinky,brain]
     create_panel(window)
 
-    p = Player("...what's your name, bub?...").materialize(scr,25,25)
+    p = Player("...what's your name, bub?...",window,scr,CX,CY,world_things).materialize(scr,25,25)
 
     q.enqueue(1,CheckInput(window,p))
 
