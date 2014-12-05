@@ -62,3 +62,5 @@ class Thing (Root):
     # return the description
     def description (self):
         return self._description
+        
+        
