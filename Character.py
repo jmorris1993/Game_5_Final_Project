@@ -5,6 +5,8 @@ Created on Fri Dec 05 14:29:54 2014
 @author: jmorris
 """
 
+from Thing import *
+
 #
 # Characters represent persons and animals and things that move
 # about possibly proactively

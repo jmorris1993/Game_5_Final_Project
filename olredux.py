@@ -8,24 +8,25 @@
 
 import time
 import random
+
+from Level import *
+from Items import *
+from Potion import *
+from Money import *
+from Equipment import *
+from Sword import *
+from Player import *
+from OlinStatue import *
+from Rat import *
+from Thing import *
+from Character import *
 from graphics import *
 
-import Thing
-import Character
-import Level
-import OlinStatue
-import Player
-import Rat
-import Items
-import Potion
-import Money
-import Equipment
-import Sword
 
 
 # Tile size of the level
-LEVEL_WIDTH = 50
-LEVEL_HEIGHT = 50
+LEVEL_WIDTH = 100
+LEVEL_HEIGHT = 100
 
 CX = 25
 CY = 25
@@ -43,19 +44,6 @@ WINDOW_HEIGHT = TILE_SIZE * VIEWPORT_HEIGHT
 
 # Pixel size of the panel on the right where you can display stuff
 WINDOW_RIGHTPANEL = 0
-
-
-#############################################################
-# 
-# The class hierarchy for objects that you can interact with
-# in the world
-#
-# Roughly modeled from the corresponding hierarchy in our
-# adventure game
-#
-
-
-
 
 
 
