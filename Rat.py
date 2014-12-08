@@ -40,7 +40,6 @@ class Rat (Character):
 
     def event (self,q):
         self._direction = random.randrange(4)
-        print self._direction
         if self._direction == 0:
             self.move(24,0)
         elif self._direction == 1:
@@ -49,6 +48,7 @@ class Rat (Character):
             self.move(0,24)
         elif self._direction == 3:
             self.move(0,-24)
+        self.register(q,self._freq)
         log("event for "+str(self))
         
         
