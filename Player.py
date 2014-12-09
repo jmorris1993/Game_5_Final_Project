@@ -12,14 +12,16 @@ from Character import *
 #
 class Player (Character):
     def __init__ (self,name,window,screen,cx,cy,things):
-        Character.__init__(self,name,"Yours truly")
+        Character.__init__(self,name,"Yours truly",screen)
         log("Player.__init__ for "+str(self))
         pic = 't_android_red.gif'
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
         self._window = window
-        self._screen = screen
-        self._cx = cx
-        self._cy = cy
+        self._origin = self._sprite.getAnchor()
+        self._cx = int(self._origin.getX())*2+1
+        self._cy = int(self._origin.getY())*2+1
+        print self._cx
+        print self._cy
         self._things = things
 
     def is_player (self):
@@ -33,11 +35,12 @@ class Player (Character):
     # something that does not happen for other characters
 
     def move (self,dx,dy):
-        #self._sprite.move(dx,dy)
-        tempx = self._cx 
+        print(self._cx, self._cy)
+        tempx = self._cx
         tempy = self._cy
         tempx += dx
         tempy += dy
+        print (tempx,tempy)
         print(self._screen.tile(tempx,tempy))
         if self._screen.tile(tempx,tempy) == 1 or self._screen.tile(tempx,tempy) == 0:
             for j in range(len(self._things)):

@@ -55,4 +55,7 @@ class Level (object):
 
     # return the tile at a given tile position in the level
     def tile (self,x,y):
-        return self._map[self._pos(x,y)]
+        try:
+            return self._map[self._pos(x,y)]
+        except IndexError:
+            return 'null'

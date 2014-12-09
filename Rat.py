@@ -14,8 +14,8 @@ import random
 # that behavior. (Which is right now unfortunately not implemented.)
 #
 class Rat (Character):
-    def __init__ (self,name,desc):
-        Character.__init__(self,name,desc)
+    def __init__ (self,name,desc,screen,x,y):
+        Character.__init__(self,name,desc,screen)
         log("Rat.__init__ for "+str(self))
         rect = Rectangle(Point(1,1),
                          Point(TILE_SIZE-1,TILE_SIZE-1))
@@ -23,6 +23,8 @@ class Rat (Character):
         rect.setOutline("red")
         self._sprite = rect
         self._direction = random.randrange(4)
+        self._x = x
+        self._y = y
 
     # A helper method to register the Rat with the event queue
     # Call this method with a queue and a time delay before
@@ -41,14 +43,14 @@ class Rat (Character):
     def event (self,q):
         self._direction = random.randrange(4)
         if self._direction == 0:
-            self.move(24,0)
+            self.move(1,0)
         elif self._direction == 1:
-            self.move(-24,0)
+            self.move(-1,0)
         elif self._direction == 2:
-            self.move(0,24)
+            self.move(0,1)
         elif self._direction == 3:
-            self.move(0,-24)
+            self.move(0,-1)
         self.register(q,self._freq)
-        log("event for "+str(self))
+        #log("event for "+str(self))
         
         
