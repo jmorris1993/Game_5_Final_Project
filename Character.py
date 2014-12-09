@@ -21,12 +21,15 @@ class Character (Thing):
         rect.setOutline("red")
         self._screen = screen
         self._sprite = rect
+        self._origin = self._sprite.getCenter()
+        self._x = self._origin.getX()
+        self._y = self._origin.getY()
+
 
     # A character has a move() method that you should implement
     # to enable movement
 
     def move (self,dx,dy):
-        pnt = self._sprite.getCenter()
         tempx = self._x
         tempy = self._y
         tempx += dx
@@ -34,7 +37,9 @@ class Character (Thing):
         print (tempx,tempy)
         print(self._screen.tile(tempx,tempy))
         if self._screen.tile(tempx,tempy) == 1 or self._screen.tile(tempx,tempy) == 0:
-            self._sprite.move(dx*24,dy*24) 
+            self._sprite.move(dx*24,dy*24)
+            self._x = tempx
+            self._y = tempy 
         if self._screen.tile(tempx,tempy) == 'null':
             print 'Can\'t move here'
 
