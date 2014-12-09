@@ -8,24 +8,25 @@ Created on Fri Dec 05 14:49:55 2014
 from Items import *
 
 class Money (Items):
-    def __init__ (self,name,desc):
-        Thing.__init__(self,name,desc)
+    def __init__ (self,name,desc,value):
+        Items.__init__(self,name,desc)
         log("Character.__init__ for "+str(self))
-        rect = Rectangle(Point(1,1),
-                         Point(TILE_SIZE-1,TILE_SIZE-1))
-        rect.setFill("red")
-        rect.setOutline("red")
-        self._sprite = rect
+        pic = 'money.gif'
+        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
+        self._origin = self._sprite.getAnchor()
+        self._cx = int(self._origin.getX())*2+1
+        self._cy = int(self._origin.getY())*2+1
+
+        self._value = value
 
     # A character has a move() method that you should implement
     # to enable movement
 
-    def move (self,dx,dy):
-        # WRITE ME!
-        pass   
-
-    def is_character (self):
+    def is_Money (self):
         return True
 
     def is_walkable (self):
-        return False
+        return True
+    
+    def get_Value (self):
+        return self._value

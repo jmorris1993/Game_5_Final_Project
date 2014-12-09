@@ -52,6 +52,39 @@ class Root (object):
     # can this object be walked over during movement?
     def is_walkable (self):
         return False
+    
+    def is_merchant (self):
+        return False
+    
+    def is_rat (self):
+        return False
+    
+    def is_boss (self):
+        return False
+    
+    def is_items (self):
+        return False
+    
+    def is_potion (self):
+        return False
+    
+    def is_money (self):
+        return False
+    
+    def is_equipment (self):
+        return False
+    
+    def is_sword (self):
+        return False
+    
+    def is_bow (self):
+        return False
+    
+    def is_armor (self):
+        return False
+    
+    def is_OlinStatue (self):
+        return False
 
 
 # A thing is something that can be interacted with and by default
