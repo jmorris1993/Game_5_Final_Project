@@ -29,4 +29,4 @@ class Money (Items):
         return True
     
     def get_Value (self):
-        return value
+        return self._value

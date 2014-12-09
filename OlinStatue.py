@@ -7,10 +7,6 @@ Created on Fri Dec 05 14:33:20 2014
 
 from Thing import *
 
-#
-# Example of a kind of thing with its specific sprite
-# (here, a rather boring gray rectangle.)
-#
 class OlinStatue (Thing):
     def __init__ (self):
         Thing.__init__(self,"Olin statue","A statue of F. W. Olin")
@@ -18,3 +14,6 @@ class OlinStatue (Thing):
         rect.setFill("gray")
         rect.setOutline("gray")
         self._sprite = rect
+    
+    def is_OlinStatue (self):
+        return True

@@ -82,6 +82,9 @@ class Root (object):
     
     def is_armor (self):
         return False
+    
+    def is_OlinStatue (self):
+        return False
 
 
 # A thing is something that can be interacted with and by default
