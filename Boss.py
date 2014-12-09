@@ -39,3 +39,9 @@ class Boss (Character):
             self._cy = tempy
         else:
             print("That's a tree!")
+    
+    def attack (self):
+        pass
+    
+    def super_attack (self):
+        pass

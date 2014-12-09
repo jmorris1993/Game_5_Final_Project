@@ -201,16 +201,20 @@ def main ():
     log ("screen created")
 
     q = EventQueue()
-
-    os = OlinStatue().materialize(scr,20,20)
+    
+    #Computer Characters
     pinky = Rat("Pinky","A rat",scr,30,30).register(q,40).materialize(scr,30,30)
     brain = Rat("Brain","A rat with a big head",scr,12,30).register(q,60).materialize(scr,12,30)
     
-    #Random items that are useful for the player
+    #Non-Player objects
+    os = OlinStatue().materialize(scr,20,20)    
+    
+    #Random items that are useful for the player. Walkable
     money1 = Money("Money","Can be used to buy things from merchant.",5000).materialize(scr,22,22)
     potion1 = Potion("Potion", "Can be used to heal Player.", 10).materialize(scr,33,33)
     sword1 = Sword("Wooden Sword", "Weakest Sword in the game", 10).materialize(scr,35,37)
     
+    #Things that are part of the game world. Everything but the player.
     world_things = [os,brain,pinky,money1,potion1,sword1]
     #create_panel(window)
 
