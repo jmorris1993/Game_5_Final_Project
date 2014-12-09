@@ -192,6 +192,7 @@ def main ():
     window = GraphWin("Olinland Redux", 
                       WINDOW_WIDTH+WINDOW_RIGHTPANEL, WINDOW_HEIGHT,
                       autoflush=False)
+                      
 
     level = Level()
     log ("level created")
