@@ -66,11 +66,11 @@ import spritesheet
 #from sprite_strip_anim import SpriteStripAnim
  
 surface = pygame.display.set_mode((100,100))
-FPS = 120
-frames = FPS / 12
+FPS = 250
+frames = FPS / 25
 for i in range(1):
-    strips = [SpriteStripAnim('55265.png', (i*96, 748, 96, 96), 19, (255,0,255), True, frames)]
-black = Color('white')
+    strips = [SpriteStripAnim('55265.png', (i*96, 0, 96, 96), 25, (255,0,255), True, frames)]
+color = Color('white')
 clock = pygame.time.Clock()
 n = 0
 strips[n].iter()
@@ -85,8 +85,8 @@ while True:
                 if n >= len(strips):
                     n = 0
                 strips[n].iter()
-    surface.fill(black)
-    surface.blit(image, (0,0))
+    surface.fill(color)
+    surface.blit(image, (2,2))
     pygame.display.flip()
     image = strips[n].next()
     clock.tick(FPS)
