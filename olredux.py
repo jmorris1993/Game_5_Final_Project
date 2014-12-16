@@ -46,7 +46,7 @@ class Screen (object):
         self._things = []
         # Background is black
         bg = Rectangle(Point(-20,-20),Point(WINDOW_WIDTH+20,WINDOW_HEIGHT+20))
-        bg.setFill("black")
+        bg.setFill("white")
         bg.setOutline("black")
         bg.draw(window)
         # here, you want to draw the tiles that are visible
@@ -59,22 +59,38 @@ class Screen (object):
             for x in range(cx-dx,cx+dx+1):
                 sx = (x-(cx-dx)) * TILE_SIZE
                 sy = (y-(cy-dy)) * TILE_SIZE
-                elt = Rectangle(Point(sx,sy),
-                                Point(sx+TILE_SIZE,sy+TILE_SIZE))
+                Image(Point(TILE_SIZE/2,TILE_SIZE/2),PLAYER)
                 if self.tile(x,y) == 0:
+                    elt = Rectangle(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE))
                     elt.setFill('lightgreen')
                     elt.setOutline('lightgreen')
-                if self.tile(x,y) == 1:
-                    elt.setFill('green')
-                    elt.setOutline('green')
+                if self.tile(x,y) == 1:                    
+                    elt = Rectangle(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE))
+                    elt.setFill('lightgreen')
+                    elt.setOutline('lightgreen')
+                    elt.draw(window)
+                    self._things.append(elt)
+                    elt = Image(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),GRASS)
                 elif self.tile(x,y) == 2:
-                    elt.setFill('sienna')
-                    elt.setOutline('sienna')
+                    elt = Rectangle(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE))
+                    elt.setFill('lightgreen')
+                    elt.setOutline('lightgreen')
+                    elt.draw(window)
+                    self._things.append(elt)
+                    elt = Image(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),TREE)
                 elif self.tile(x,y) == 3:
+                    elt = Rectangle(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE))
                     elt.setFill('darkgrey')
                     elt.setOutline('darkgrey')
                 self._things.append(elt)
                 elt.draw(window)
+                rect = Rectangle(Point(640,0),Point(800,24))
+                rect.setFill('white')
+                rect.setOutline('lightgrey')
+                rect.draw(window)
+                health = Image(Point(80,16),HEALTH)
+                health.draw(window)
+                
 
     # return the tile at a given tile position
     def tile (self,x,y):
@@ -203,22 +219,25 @@ def main ():
     q = EventQueue()
     
     #Computer Characters
-    pinky = Rat("Pinky","A rat",scr,30,30).register(q,40).materialize(scr,30,30)
-    brain = Rat("Brain","A rat with a big head",scr,12,30).register(q,60).materialize(scr,12,30)
+    pinky = Rat("Pinky","A rat",scr).register(q,40).materialize(scr,30,30)
+    brain = Rat("Brain","A rat with a big head",scr).register(q,60).materialize(scr,12,30)
     
     #Non-Player objects
     os = OlinStatue().materialize(scr,20,20)    
     
     #Random items that are useful for the player. Walkable
-    money1 = Money("Money","Can be used to buy things from merchant.",5000).materialize(scr,22,22)
+    money =[]
+    for i in range(100):
+        money.append(Money("Money","Can be used to buy things from merchant.",random.choice([1,5,50])).materialize(scr,random.randint(
+            LEVEL_WIDTH/2-VIEWPORT_WIDTH/2+1,LEVEL_WIDTH/2+VIEWPORT_WIDTH/2-1),random.randint(LEVEL_HEIGHT/2-VIEWPORT_HEIGHT/2+3,LEVEL_HEIGHT/2+VIEWPORT_HEIGHT/2)-1))
     potion1 = Potion("Potion", "Can be used to heal Player.", 10).materialize(scr,33,33)
     sword1 = Sword("Wooden Sword", "Weakest Sword in the game", 10).materialize(scr,35,37)
     
     #Things that are part of the game world. Everything but the player.
-    world_things = [os,brain,pinky,money1,potion1,sword1]
+    world_things = [os,brain,pinky,money,potion1,sword1]
     #create_panel(window)
 
-    p = Player("...what's your name, bub?...",window,scr,CX,CY,world_things).materialize(scr,25,25)
+    p = Player("...what's your name, bub?...",window,scr,world_things).materialize(scr,25,25)
 
     q.enqueue(1,CheckInput(window,p))
 

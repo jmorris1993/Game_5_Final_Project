@@ -5,15 +5,13 @@ Created on Fri Dec 05 14:33:20 2014
 @author: jmorris
 """
 
-from Thing import *
+from UniVars import *
+from Items import *
 
-class OlinStatue (Thing):
+class OlinStatue (Items):
     def __init__ (self):
-        Thing.__init__(self,"Olin statue","A statue of F. W. Olin")
-        rect = Rectangle(Point(1,1),Point(TILE_SIZE-1,TILE_SIZE-1))
-        rect.setFill("gray")
-        rect.setOutline("gray")
-        self._sprite = rect
+        Items.__init__(self,"Olin statue","A statue of F. W. Olin")
+        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),STATUE)
     
     def is_OlinStatue (self):
         return True

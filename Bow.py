@@ -5,15 +5,13 @@ Created on Fri Dec 05 15:07:12 2014
 @author: jmorris
 """
 
+from UniVars import *
+
 class Bow (Equipment):
     def __init__ (self,name,desc,attack,attackRange):
         Equipment.__init__(self,name,desc)
         log("Character.__init__ for "+str(self))
-        pic = 'money.gif'
-        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
-        self._origin = self._sprite.getAnchor()
-        self._cx = int(self._origin.getX())*2+1
-        self._cy = int(self._origin.getY())*2+1
+        #self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
         self._attack = attack
         self._attackRange = attackRange
 

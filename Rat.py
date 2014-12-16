@@ -5,6 +5,7 @@ Created on Fri Dec 05 14:33:46 2014
 @author: jmorris
 """
  
+from UniVars import *
 from Character import *
 import random
 
@@ -14,17 +15,12 @@ import random
 # that behavior. (Which is right now unfortunately not implemented.)
 #
 class Rat (Character):
-    def __init__ (self,name,desc,screen,x,y):
+    def __init__ (self,name,desc,screen):
         Character.__init__(self,name,desc,screen)
         log("Rat.__init__ for "+str(self))
-        rect = Rectangle(Point(1,1),
-                         Point(TILE_SIZE-1,TILE_SIZE-1))
-        rect.setFill("red")
-        rect.setOutline("red")
-        self._sprite = rect
+        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),SCORP)
         self._direction = random.randrange(4)
-        self._x = x
-        self._y = y
+        self._attack = 0
 
     # A helper method to register the Rat with the event queue
     # Call this method with a queue and a time delay before
@@ -37,6 +33,13 @@ class Rat (Character):
         self._freq = freq
         q.enqueue(freq,self)
         return self
+
+    def is_scorpion(self):
+        return True
+
+    def attack(self):
+        self._attack = random.randrange(4)
+        return self._attack
 
     # this gets called from event queue when the time is right
 

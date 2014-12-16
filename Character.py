@@ -5,6 +5,7 @@ Created on Fri Dec 05 14:29:54 2014
 @author: jmorris
 """
 
+from UniVars import *
 from Thing import *
 
 #
@@ -21,9 +22,6 @@ class Character (Thing):
         rect.setOutline("red")
         self._screen = screen
         self._sprite = rect
-        self._origin = self._sprite.getCenter()
-        self._x = self._origin.getX()
-        self._y = self._origin.getY()
 
 
     # A character has a move() method that you should implement
@@ -34,8 +32,6 @@ class Character (Thing):
         tempy = self._y
         tempx += dx
         tempy += dy
-        print (tempx,tempy)
-        print(self._screen.tile(tempx,tempy))
         if self._screen.tile(tempx,tempy) == 1 or self._screen.tile(tempx,tempy) == 0:
             self._sprite.move(dx*24,dy*24)
             self._x = tempx

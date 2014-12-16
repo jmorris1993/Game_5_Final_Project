@@ -5,24 +5,30 @@ Created on Fri Dec 05 14:35:14 2014
 @author: jmorris
 """
 
+from UniVars import *
 from Character import *
+from graphics import *
 
 #
 # The Player character
 #
 class Player (Character):
-    def __init__ (self,name,window,screen,cx,cy,things):
+    def __init__ (self,name,window,screen,things):
         Character.__init__(self,name,"Yours truly",screen)
         log("Player.__init__ for "+str(self))
-        pic = 't_android_red.gif'
-        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
+        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),PLAYER)
         self._window = window
-        self._origin = self._sprite.getAnchor()
-        self._cx = int(self._origin.getX())*2+1
-        self._cy = int(self._origin.getY())*2+1
-        print self._cx
-        print self._cy
         self._things = things
+        self._money = 0
+        self.current_money=Text(Point(697,12),"Rupees: " + str(self._money))
+        self.current_money.draw(self._window)
+        self._health = 12
+        self._maxHealth = self._health
+        self.healthStat = Text(Point(80,40),str(self._health)+'/'+str(self._maxHealth))
+        self.healthStat.setStyle('bold')
+        self.healthStat.draw(window)
+        self.health()
+
 
     def is_player (self):
         return True
@@ -35,19 +41,43 @@ class Player (Character):
     # something that does not happen for other characters
 
     def move (self,dx,dy):
-        print(self._cx, self._cy)
-        tempx = self._cx
-        tempy = self._cy
+        tempx = self._x
+        tempy = self._y
         tempx += dx
         tempy += dy
-        print (tempx,tempy)
-        print(self._screen.tile(tempx,tempy))
         if self._screen.tile(tempx,tempy) == 1 or self._screen.tile(tempx,tempy) == 0:
             for j in range(len(self._things)):
-                self._things[j]._sprite.move(-dx*24,-dy*24)
+                if not isinstance(self._things[j], list):
+                    self._things[j]._sprite.move(-dx*24,-dy*24)
+                    if self._things[j]._x == tempx and self._things[j]._y == tempy:
+                        print 'here'
+                        if self._things[j].is_scorpion():
+                            print 'damage'
+                            scorp = self._things[j]
+                            self.battle(scorp)
+                else:
+                    for t in range(len(self._things[j])):
+                        if self._things[j][t]._x == tempx and self._things[j][t]._y == tempy:
+                            if self._things[j][t].is_money():
+                                self._things[j][t].add_value(self)
+                        self._things[j][t]._sprite.move(-dx*24,-dy*24)
             for i in range(len(self._screen._things)):
                 self._screen._things[i].move(-dx*24,-dy*24)
-            self._cx = tempx
-            self._cy = tempy
+            self._x = tempx
+            self._y = tempy
         else:
             print("That's a tree!")
+
+    def health(self):
+        px_per_health = 130/self._maxHealth
+        self.healthTile = Rectangle(Point(17,6),Point(17+px_per_health*self._health,25))
+        self.healthTile.setFill('red')
+        self.healthTile.setOutline('red')
+        self.healthTile.draw(self._window)
+
+    def battle(self, enemy):
+        self._health = self._health - enemy.attack()
+        self.healthTile.undraw()
+        self.health()
+        self.healthStat.setText(str(self._health)+'/'+str(self._maxHealth))
+

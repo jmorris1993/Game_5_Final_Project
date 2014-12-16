@@ -5,28 +5,9 @@ Created on Fri Dec 05 14:26:18 2014
 @author: jmorris
 """
 
+from UniVars import *
 from graphics import *
 import time
-#Tile size of the level
-LEVEL_WIDTH = 100
-LEVEL_HEIGHT = 100
-
-CX = 25
-CY = 25
-
-# Tile size of the viewport (through which you view the level)
-VIEWPORT_WIDTH = 21
-VIEWPORT_HEIGHT = 21   
-
-# Pixel size of a tile (which gives you the size of the window)
-TILE_SIZE = 24
-
-# Pixel size of the viewport
-WINDOW_WIDTH = TILE_SIZE * VIEWPORT_WIDTH
-WINDOW_HEIGHT = TILE_SIZE * VIEWPORT_HEIGHT
-
-# Pixel size of the panel on the right where you can display stuff
-WINDOW_RIGHTPANEL = 0
 
 def log (message):
     print time.strftime("[%H:%M:%S]",time.localtime()),message
@@ -70,6 +51,9 @@ class Root (object):
     
     def is_money (self):
         return False
+
+    def is_scorpion(self):
+        return False
     
     def is_equipment (self):
         return False
@@ -85,7 +69,6 @@ class Root (object):
     
     def is_OlinStatue (self):
         return False
-
 
 # A thing is something that can be interacted with and by default
 # is not moveable or walkable over
@@ -121,7 +104,6 @@ class Thing (Root):
     # return the description
     def description (self):
         return self._description
-
 
     # creating a thing does not put it in play -- you have to 
     # call materialize, passing in the screen and the position
