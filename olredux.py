@@ -239,10 +239,7 @@ def main ():
     sword1 = Sword("Wooden Sword", "Weakest Sword in the game", 10).materialize(scr,35,37)
     
     #Things that are part of the game world. Everything but the player.
-<<<<<<< HEAD
-    world_things = [os,brain,pinky,money,potion,potion1,sword1]
-=======
->>>>>>> origin/master
+
     #create_panel(window)
 
     p = Player("...what's your name, bub?...",window).materialize(scr,25,25)

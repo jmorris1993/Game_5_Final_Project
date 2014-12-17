@@ -15,7 +15,6 @@ class Equipment (Thing):
     # A character has a move() method that you should implement
     # to enable movement
 
-
     def is_equipment (self):
         return True
 
