@@ -13,12 +13,11 @@ from graphics import *
 # The Player character
 #
 class Player (Character):
-    def __init__ (self,name,window,screen,things):
-        Character.__init__(self,name,"Yours truly",screen)
+    def __init__ (self,name,window):
+        Character.__init__(self,name,"Yours truly")
         log("Player.__init__ for "+str(self))
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),PLAYER)
         self._window = window
-        self._things = things
         self._money = 0
         self.current_money=Text(Point(697,12),"Rupees: " + str(self._money))
         self.current_money.draw(self._window)
@@ -40,29 +39,23 @@ class Player (Character):
     # In particular, when the Player move, the screen scrolls,
     # something that does not happen for other characters
 
-    def move (self,dx,dy):
+    def p_move (self,dx,dy):
         tempx = self._x
         tempy = self._y
         tempx += dx
         tempy += dy
         if self._screen.tile(tempx,tempy) == 1 or self._screen.tile(tempx,tempy) == 0:
-            for j in range(len(self._things)):
-                if not isinstance(self._things[j], list):
-                    self._things[j]._sprite.move(-dx*24,-dy*24)
-                    if self._things[j]._x == tempx and self._things[j]._y == tempy:
-                        print 'here'
-                        if self._things[j].is_scorpion():
-                            print 'damage'
-                            scorp = self._things[j]
-                            self.battle(scorp)
-                else:
-                    for t in range(len(self._things[j])):
-                        if self._things[j][t]._x == tempx and self._things[j][t]._y == tempy:
-                            if self._things[j][t].is_money():
-                                self._things[j][t].add_value(self)
-                        self._things[j][t]._sprite.move(-dx*24,-dy*24)
+            print (tempx, tempy)
             for i in range(len(self._screen._things)):
-                self._screen._things[i].move(-dx*24,-dy*24)
+                if self._screen._things[i] != self:
+                    self._screen._things[i].move(-dx*24,-dy*24)
+                if self._screen._things[i].is_thing():
+                    if self._screen._things[i]._x == tempx and self._screen._things[i]._y == tempy:
+                        if self._screen._things[i].is_scorpion():
+                            scorp = self._screen._things[i]
+                            self.battle(scorp)
+                        if self._screen._things[i].is_money():
+                            self._screen._things[i].add_value(self)
             self._x = tempx
             self._y = tempy
         else:
@@ -80,4 +73,3 @@ class Player (Character):
         self.healthTile.undraw()
         self.health()
         self.healthStat.setText(str(self._health)+'/'+str(self._maxHealth))
-
