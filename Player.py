@@ -44,8 +44,7 @@ class Player (Character):
         tempy = self._y
         tempx += dx
         tempy += dy
-        if self._screen.tile(tempx,tempy) == 1 or self._screen.tile(tempx,tempy) == 0:
-            print (tempx, tempy)
+        if self._screen._things(tempx,tempy) == 1 or self._screen.tile(tempx,tempy) == 0:
             for i in range(len(self._screen._things)):
                 if self._screen._things[i] != self:
                     self._screen._things[i].move(-dx*24,-dy*24)
@@ -58,6 +57,8 @@ class Player (Character):
                             self._screen._things[i].add_value(self)
             self._x = tempx
             self._y = tempy
+        elif self._screen.tile(tempx,tempy) == 4:
+            print("Its a locked door...")
         else:
             print("That's a tree!")
 

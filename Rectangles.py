@@ -5,8 +5,12 @@ from UniVars import *
 from graphics import *
 
 class Rectangles (Rectangle):
-    def __init__(self, p1, p2, piece):
+    def __init__(self, p1, p2, piece,x,y):
         Rectangle.__init__(self,p1,p2)
+        self._walkable = piece
+        self._x = x
+        self._y = y
+        print(x,y)
         
     def get_x(self):
         pt = self.getCenter()
@@ -16,6 +20,8 @@ class Rectangles (Rectangle):
         pt = self.getCenter()
         return pt.getY()
 
+    def change_door(self,screen):
+        pass
 
     # is this object a Thing?
     def is_thing (self):
@@ -70,8 +76,10 @@ class Rectangles (Rectangle):
         return False
 
 class Images(Image):
-    def __init__(self, p, *pixmap):
-       Image.__init__(self, p, *pixmap)
+    def __init__(self, p, x, y, *pixmap):
+        Image.__init__(self, p, *pixmap)
+        self._x = x
+        self._y = y
 
     # is this object a Thing?
     def is_thing (self):

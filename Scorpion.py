@@ -14,19 +14,11 @@ import random
 # the rat move, so that it can be queued into the event queue to enable
 # that behavior. (Which is right now unfortunately not implemented.)
 #
-<<<<<<< HEAD:Rat.py
-class Rat (Character):
-    def __init__ (self,name,desc,screen):
-        Character.__init__(self,name,desc,screen)
-        log("Rat.__init__ for "+str(self))
-        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),KITTY)
-=======
 class Scorpion (Character):
     def __init__ (self,name,desc):
         Character.__init__(self,name,desc)
         log("Scorpion.__init__ for "+str(self))
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),SCORP)
->>>>>>> origin/master:Scorpion.py
         self._direction = random.randrange(4)
         self._attack = 0
 
