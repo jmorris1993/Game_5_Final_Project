@@ -12,9 +12,9 @@ class Money (Items):
     def __init__ (self,name,desc,value):
         Items.__init__(self,name,desc)
         log("Character.__init__ for "+str(self))
-        if value == 1:
+        if value == 5:
             self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),MONEY)
-        elif value == 5:
+        elif value == 10:
             self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),MONEY5)
         elif value == 50:
             self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),MONEY50)

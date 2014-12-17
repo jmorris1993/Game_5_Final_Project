@@ -13,6 +13,7 @@ class Armor (Equipment):
         log("Character.__init__ for "+str(self))
         #self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
         self._defense = defense
+        #self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),PLAYER)
 
     # A character has a move() method that you should implement
     # to enable movement
