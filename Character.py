@@ -13,21 +13,20 @@ from Thing import *
 # about possibly proactively
 #
 class Character (Thing):
-    def __init__ (self,name,desc,screen):
+    def __init__ (self,name,desc):
         Thing.__init__(self,name,desc)
         log("Character.__init__ for "+str(self))
         rect = Rectangle(Point(1,1),
                          Point(TILE_SIZE-1,TILE_SIZE-1))
         rect.setFill("red")
         rect.setOutline("red")
-        self._screen = screen
         self._sprite = rect
 
 
     # A character has a move() method that you should implement
     # to enable movement
 
-    def move (self,dx,dy):
+    def c_move (self,dx,dy):
         tempx = self._x
         tempy = self._y
         tempx += dx

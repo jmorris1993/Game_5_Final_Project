@@ -17,11 +17,12 @@ from Equipment import *
 from Sword import *
 from Player import *
 from OlinStatue import *
-from Rat import *
+from Scorpion import *
 from Thing import *
 from Character import *
 from graphics import *
 from UniVars import *
+from Rectangles import *
 #
 # A Screen is a representation of the level displayed in the 
 # viewport, with a representation for all the tiles and a 
@@ -61,25 +62,25 @@ class Screen (object):
                 sy = (y-(cy-dy)) * TILE_SIZE
                 Image(Point(TILE_SIZE/2,TILE_SIZE/2),PLAYER)
                 if self.tile(x,y) == 0:
-                    elt = Rectangle(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE))
+                    elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),0)
                     elt.setFill('lightgreen')
                     elt.setOutline('lightgreen')
                 if self.tile(x,y) == 1:                    
-                    elt = Rectangle(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE))
+                    elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),1)
                     elt.setFill('lightgreen')
                     elt.setOutline('lightgreen')
                     elt.draw(window)
                     self._things.append(elt)
-                    elt = Image(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),GRASS)
+                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),GRASS)
                 elif self.tile(x,y) == 2:
-                    elt = Rectangle(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE))
+                    elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),2)
                     elt.setFill('lightgreen')
                     elt.setOutline('lightgreen')
                     elt.draw(window)
                     self._things.append(elt)
-                    elt = Image(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),TREE)
+                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),TREE)
                 elif self.tile(x,y) == 3:
-                    elt = Rectangle(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE))
+                    elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),3)
                     elt.setFill('darkgrey')
                     elt.setOutline('darkgrey')
                 self._things.append(elt)
@@ -175,7 +176,7 @@ class CheckInput (object):
             exit(0)
         if key in MOVE:
             (dx,dy) = MOVE[key]
-            self._player.move(dx,dy)
+            self._player.p_move(dx,dy)
         q.enqueue(1,self)
 
 # Create the right-side panel that can be used to display interesting
@@ -219,8 +220,8 @@ def main ():
     q = EventQueue()
     
     #Computer Characters
-    pinky = Rat("Pinky","A rat",scr).register(q,40).materialize(scr,30,30)
-    brain = Rat("Brain","A rat with a big head",scr).register(q,60).materialize(scr,12,30)
+    pinky = Scorpion("Pinky","A Scorpion").register(q,40).materialize(scr,30,30)
+    brain = Scorpion("Brain","A Scorpion with a big head").register(q,60).materialize(scr,12,30)
     
     #Non-Player objects
     os = OlinStatue().materialize(scr,20,20)    
@@ -234,10 +235,9 @@ def main ():
     sword1 = Sword("Wooden Sword", "Weakest Sword in the game", 10).materialize(scr,35,37)
     
     #Things that are part of the game world. Everything but the player.
-    world_things = [os,brain,pinky,money,potion1,sword1]
     #create_panel(window)
 
-    p = Player("...what's your name, bub?...",window,scr,world_things).materialize(scr,25,25)
+    p = Player("...what's your name, bub?...",window).materialize(scr,25,25)
 
     q.enqueue(1,CheckInput(window,p))
 

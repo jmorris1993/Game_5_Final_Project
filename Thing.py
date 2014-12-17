@@ -113,6 +113,7 @@ class Thing (Root):
         self._screen = screen
         self._x = x
         self._y = y
+        self._screen._things.append(self)
         return self
 
     def is_thing (self):
@@ -120,5 +121,14 @@ class Thing (Root):
 
     def is_walkable (self):
         return False
+
+    def move (self,dx,dy):
+        self._sprite.move(dx,dy)
+
+    def get_x(self):
+        return self._x
+
+    def get_y(self):
+        return self._y
 
 
