@@ -14,6 +14,7 @@ class Bow (Equipment):
         #self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),pic)
         self._attack = attack
         self._attackRange = attackRange
+        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),FIRFLO)
 
 
     # A character has a move() method that you should implement

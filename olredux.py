@@ -228,13 +228,17 @@ def main ():
     #Random items that are useful for the player. Walkable
     money =[]
     for i in range(100):
-        money.append(Money("Money","Can be used to buy things from merchant.",random.choice([1,5,50])).materialize(scr,random.randint(
+        money.append(Money("Money","Can be used to buy things from merchant.",random.choice([5,10,50])).materialize(scr,random.randint(
             LEVEL_WIDTH/2-VIEWPORT_WIDTH/2+1,LEVEL_WIDTH/2+VIEWPORT_WIDTH/2-1),random.randint(LEVEL_HEIGHT/2-VIEWPORT_HEIGHT/2+3,LEVEL_HEIGHT/2+VIEWPORT_HEIGHT/2)-1))
+    potion = []
+    for i in range(3):
+        potion.append( Potion("Potion", "Can be used to heal Player.",10).materialize(scr,random.randint(LEVEL_WIDTH/2-VIEWPORT_WIDTH/2+1,LEVEL_WIDTH/2+VIEWPORT_WIDTH/2-1),random.randint(LEVEL_HEIGHT/2-VIEWPORT_HEIGHT/2+3,LEVEL_HEIGHT/2+VIEWPORT_HEIGHT/2)-1))
+    
     potion1 = Potion("Potion", "Can be used to heal Player.", 10).materialize(scr,33,33)
     sword1 = Sword("Wooden Sword", "Weakest Sword in the game", 10).materialize(scr,35,37)
     
     #Things that are part of the game world. Everything but the player.
-    world_things = [os,brain,pinky,money,potion1,sword1]
+    world_things = [os,brain,pinky,money,potion,potion1,sword1]
     #create_panel(window)
 
     p = Player("...what's your name, bub?...",window,scr,world_things).materialize(scr,25,25)

@@ -18,7 +18,7 @@ class Rat (Character):
     def __init__ (self,name,desc,screen):
         Character.__init__(self,name,desc,screen)
         log("Rat.__init__ for "+str(self))
-        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),SCORP)
+        self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),KITTY)
         self._direction = random.randrange(4)
         self._attack = 0
 
