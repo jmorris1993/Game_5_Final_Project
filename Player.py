@@ -44,7 +44,7 @@ class Player (Character):
         tempy = self._y
         tempx += dx
         tempy += dy
-        if self._screen._things(tempx,tempy) == 1 or self._screen.tile(tempx,tempy) == 0:
+        if self._screen.tile(tempx,tempy) == 1 or self._screen.tile(tempx,tempy) == 0:
             for i in range(len(self._screen._things)):
                 if self._screen._things[i] != self:
                     self._screen._things[i].move(-dx*24,-dy*24)
