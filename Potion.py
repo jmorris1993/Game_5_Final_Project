@@ -30,16 +30,9 @@ class Potion (Items):
         return self._value
     
     def add_value (self, player):
-        player._health += self.get_value()
+        player._health += self.get_Value()
         if player._health >= 12:
-            player._money = 12
-            warning = Text(Point(697,36),"MAX!")
-            warning.setStyle('bold')
-            rect2 = Rectangle(Point(670,24),Point(720,48))
-            rect2.setFill("white")
-            rect2.setOutline("white")
-            rect2.draw(player._window)
-            warning.setTextColor('red2')
-            warning.draw(player._window)
+            player._health = 12
+        self._sprite.undraw()
         
         
