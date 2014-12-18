@@ -61,6 +61,9 @@ class Player (Character):
                     if self._screen._things[i].is_scorpion():
                         scorp = self._screen._things[i]
                         self.battle(scorp)
+                    if self._screen._things[i].is_boss():
+                        boss = self._screen._things[i]
+                        self.battle(boss)
                     if self._screen._things[i].is_money():
                         obj = self._screen._things[i].add_value(self)
                     
