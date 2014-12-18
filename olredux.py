@@ -74,49 +74,49 @@ class Screen (object):
                     elt.setOutline(self._color[0])
                     elt.draw(window)
                     self._things.append(elt)
-                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,self._color[2])
+                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,1,self._color[2])
                 elif self.tile(x,y) == 2:
                     elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),2,sx/24,sy/24)
                     elt.setFill(self._color[0])
                     elt.setOutline(self._color[0])
                     elt.draw(window)
                     self._things.append(elt)
-                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,self._color[3])
+                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,2,self._color[3])
                 elif self.tile(x,y) == 3:
                     elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),3,sx/24,sy/24)
                     elt.setFill(self._color[1])
                     elt.setOutline(self._color[1])
                     elt.draw(window)
                     self._things.append(elt)
-                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,self._color[4])
+                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,3,self._color[4])
                 elif self.tile(x,y) == 4:
                     elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),4,sx/24,sy/24)
                     elt.setFill('black')
                     elt.setOutline('black')
                     elt.draw(window)
                     self._things.append(elt)
-                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,DOOR_UP)
+                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,4,DOOR_UP)
                 elif self.tile(x,y) == 5:
                     elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),4,sx/24,sy/24)
                     elt.setFill('black')
                     elt.setOutline('black')
                     elt.draw(window)
                     self._things.append(elt)
-                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,DOOR_LEFT)
+                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,4,DOOR_LEFT)
                 elif self.tile(x,y) == 6:
                     elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),4,sx/24,sy/24)
                     elt.setFill('black')
                     elt.setOutline('black')
                     elt.draw(window)
                     self._things.append(elt)
-                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,DOOR_DOWN)
+                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,4,DOOR_DOWN)
                 elif self.tile(x,y) == 7:
                     elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),4,sx/24,sy/24)
                     elt.setFill('black')
                     elt.setOutline('black')
                     elt.draw(window)
                     self._things.append(elt)
-                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,DOOR_RIGHT)
+                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,4,DOOR_RIGHT)
                 self._things.append(elt)
                 elt.draw(window)
             rect = Rectangle(Point(640,0),Point(800,24))
@@ -126,6 +126,13 @@ class Screen (object):
             health = Image(Point(80,16),HEALTH)
             health.draw(window)
                 
+
+    def clear_scr(self):
+        for i in range(len(self._things)):
+            if self._things[i].is_thing():
+                self._things[i]._sprite.undraw()
+            else:
+                self._things[i].undraw()
 
     # return the tile at a given tile position
     def tile (self,x,y):
@@ -251,21 +258,19 @@ def main ():
     
     #Computer Characters
     pinky = Scorpion("Pinky","A Scorpion").register(q,40).materialize(scr,30,30)
-    brain = Scorpion("Brain","A Scorpion with a big head").register(q,60).materialize(scr,12,30)
+    #brain = Scorpion("Brain","A Scorpion with a big head").register(q,60).materialize(scr,12,30)
     
     #Non-Player objects
     os = OlinStatue().materialize(scr,20,20)    
     
     #Random items that are useful for the player. Walkable
-    money =[]
-    for i in range(100):
-        money.append(Money("Money","Can be used to buy things from merchant.",random.choice([5,10,50])).materialize(scr,random.randint(
-            LEVEL_WIDTH/2-VIEWPORT_WIDTH/2+1,LEVEL_WIDTH/2+VIEWPORT_WIDTH/2-1),random.randint(LEVEL_HEIGHT/2-VIEWPORT_HEIGHT/2+3,LEVEL_HEIGHT/2+VIEWPORT_HEIGHT/2)-1))
-    potion = []
+    for i in range(10):
+        Money("Money","Can be used to buy things from merchant.",random.choice([5,10,50])).materialize(scr,random.randint(
+            LEVEL_WIDTH/2-VIEWPORT_WIDTH/2+1,LEVEL_WIDTH/2+VIEWPORT_WIDTH/2-1),random.randint(LEVEL_HEIGHT/2-VIEWPORT_HEIGHT/2+3,LEVEL_HEIGHT/2+VIEWPORT_HEIGHT/2)-1)
     for i in range(3):
-        potion.append( Potion("Potion", "Can be used to heal Player.",10).materialize(scr,random.randint(LEVEL_WIDTH/2-VIEWPORT_WIDTH/2+1,LEVEL_WIDTH/2+VIEWPORT_WIDTH/2-1),random.randint(LEVEL_HEIGHT/2-VIEWPORT_HEIGHT/2+3,LEVEL_HEIGHT/2+VIEWPORT_HEIGHT/2)-1))
+        Potion("Potion", "Can be used to heal Player.",10).materialize(scr,random.randint(
+            LEVEL_WIDTH/2-VIEWPORT_WIDTH/2+1,LEVEL_WIDTH/2+VIEWPORT_WIDTH/2-1),random.randint(LEVEL_HEIGHT/2-VIEWPORT_HEIGHT/2+3,LEVEL_HEIGHT/2+VIEWPORT_HEIGHT/2)-1)
     
-    potion1 = Potion("Potion", "Can be used to heal Player.", 10).materialize(scr,33,33)
     sword1 = Sword("Wooden Sword", "Weakest Sword in the game", 10).materialize(scr,35,37)
     
     #Things that are part of the game world. Everything but the player.

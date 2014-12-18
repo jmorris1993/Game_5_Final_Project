@@ -33,6 +33,12 @@ class Root (object):
     # can this object be walked over during movement?
     def is_walkable (self):
         return False
+
+    def is_open_door(self):
+        return False
+
+    def is_closed_door(self):
+        return False
     
     def is_merchant (self):
         return False

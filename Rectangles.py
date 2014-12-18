@@ -10,7 +10,9 @@ class Rectangles (Rectangle):
         self._walkable = piece
         self._x = x
         self._y = y
-        print(x,y)
+        self._p1 = p1
+        self._p2 = p2
+
         
     def get_x(self):
         pt = self.getCenter()
@@ -20,13 +22,15 @@ class Rectangles (Rectangle):
         pt = self.getCenter()
         return pt.getY()
 
-    def change_door(self,screen):
-        pass
-
     # is this object a Thing?
     def is_thing (self):
         return False
 
+    def is_open_door(self):
+        return False
+
+    def is_closed_door(self):
+        return False
     # is this object a Character?
     def is_character (self):
         return False
@@ -37,7 +41,11 @@ class Rectangles (Rectangle):
 
     # can this object be walked over during movement?
     def is_walkable (self):
-        return True
+        print self._walkable
+        if self._walkable == 1 or self._walkable == 0 or self._walkable == 5:
+            return True
+        else:
+            return False
     
     def is_merchant (self):
         return False
@@ -76,10 +84,21 @@ class Rectangles (Rectangle):
         return False
 
 class Images(Image):
-    def __init__(self, p, x, y, *pixmap):
+    def __init__(self, p, x, y, piece, *pixmap):
         Image.__init__(self, p, *pixmap)
+        self._walkable = piece
         self._x = x
         self._y = y
+        self._p = p
+
+    def change_door(self,screen,window):
+        self._walkable = 5
+        print (self._x,self._y)
+        door = Images(self._p, self._x, self._y, self._walkable, DOOR_OPEN)
+        screen._things.append(door)
+        screen._things.remove(self)
+        self.undraw()
+        door.draw(window)
 
     # is this object a Thing?
     def is_thing (self):
@@ -93,9 +112,24 @@ class Images(Image):
     def is_player (self):
         return False
 
+    def is_open_door(self):
+        if self._walkable == 5:
+            return True
+        else:
+            return False
+
+    def is_closed_door(self):
+        if self._walkable == 4:
+            return True
+        else:
+            return False
+
     # can this object be walked over during movement?
     def is_walkable (self):
-        return True
+        if self._walkable == 1 or self._walkable == 5:
+            return True
+        else:
+            return False
     
     def is_merchant (self):
         return False
@@ -104,6 +138,9 @@ class Images(Image):
         return False
     
     def is_boss (self):
+        return False
+
+    def is_door(self):
         return False
     
     def is_items (self):

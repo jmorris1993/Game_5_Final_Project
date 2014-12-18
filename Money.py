@@ -46,3 +46,4 @@ class Money (Items):
             warning.draw(player._window)
         self._sprite.undraw()
         player.current_money.setText("Rupees: " + str(player._money))
+        return self

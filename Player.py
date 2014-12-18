@@ -44,23 +44,29 @@ class Player (Character):
         tempy = self._y
         tempx += dx
         tempy += dy
-        if self._screen.tile(tempx,tempy) == 1 or self._screen.tile(tempx,tempy) == 0:
+        obj = None
+        print(tempx,tempy)
+        if self._screen.tile(tempx,tempy) == 1 or self._screen.tile(tempx,tempy) == 0 or self._screen.tile(tempx,tempy) == 4 or self._screen.tile(tempx,tempy) == 5 or self._screen.tile(tempx,tempy) == 6 or self._screen.tile(tempx,tempy) == 7:
             for i in range(len(self._screen._things)):
+                if self._screen._things[i]._x == tempx and self._screen._things[i]._y == tempy:
+                    if self._screen._things[i].is_scorpion():
+                        scorp = self._screen._things[i]
+                        self.battle(scorp)
+                    if self._screen._things[i].is_money():
+                        obj = self._screen._things[i].add_value(self)
+                    if self._screen._things[i].is_open_door():
+                        print 'Active'
+                        self._screen.clear_scr()
+                if self._screen._things[i].is_closed_door():
+                    self._screen._things[i].change_door(self._screen,self._window)
                 if self._screen._things[i] != self:
                     self._screen._things[i].move(-dx*24,-dy*24)
-                if self._screen._things[i].is_thing():
-                    if self._screen._things[i]._x == tempx and self._screen._things[i]._y == tempy:
-                        if self._screen._things[i].is_scorpion():
-                            scorp = self._screen._things[i]
-                            self.battle(scorp)
-                        if self._screen._things[i].is_money():
-                            self._screen._things[i].add_value(self)
-            self._x = tempx
-            self._y = tempy
-        elif self._screen.tile(tempx,tempy) == 4:
-            print("Its a locked door...")
+                    self._x = tempx
+                    self._y = tempy
+            if obj != None:
+                self._screen._things.remove(obj)
         else:
-            print("That's a tree!")
+            print("I can't walk on that!")
 
     def health(self):
         px_per_health = 130/self._maxHealth
