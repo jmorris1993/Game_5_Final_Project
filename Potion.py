@@ -41,5 +41,5 @@ class Potion (Items):
             rect2.draw(player._window)
             warning.setTextColor('red2')
             warning.draw(player._window)
-        self._sprite.undraw()
-        player.current_money.setText("Rupees: " + str(player._money))
+        
+        

@@ -14,6 +14,7 @@ import random
 # the rat move, so that it can be queued into the event queue to enable
 # that behavior. (Which is right now unfortunately not implemented.)
 #
+
 class Scorpion (Character):
     def __init__ (self,name,desc):
         Character.__init__(self,name,desc)
@@ -21,6 +22,7 @@ class Scorpion (Character):
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),SCORP)
         self._direction = random.randrange(4)
         self._attack = 0
+        self._health = 5
 
     # A helper method to register the Scorpion with the event queue
     # Call this method with a queue and a time delay before
@@ -33,6 +35,7 @@ class Scorpion (Character):
         self._freq = freq
         q.enqueue(freq,self)
         return self
+    
 
     def is_scorpion(self):
         return True
