@@ -24,5 +24,10 @@ class Sword (Equipment):
     def is_walkable (self):
         return True
     
-    def get_Attack (self):
+    def get_attack (self):
         return self._attack
+    
+    def add_attack (self, player):
+        player._attack += self.get_attack()
+        player.current_attack.setText("Attack: " + str(player._attack))
+        self._sprite.undraw()

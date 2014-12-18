@@ -25,6 +25,8 @@ from Character import *
 from graphics import *
 from UniVars import *
 from Rectangles import *
+from Armor import *
+
 #
 # A Screen is a representation of the level displayed in the 
 # viewport, with a representation for all the tiles and a 
@@ -271,8 +273,8 @@ def main ():
         Potion("Potion", "Can be used to heal Player.",10).materialize(scr,random.randint(
             LEVEL_WIDTH/2-VIEWPORT_WIDTH/2+1,LEVEL_WIDTH/2+VIEWPORT_WIDTH/2-1),random.randint(LEVEL_HEIGHT/2-VIEWPORT_HEIGHT/2+3,LEVEL_HEIGHT/2+VIEWPORT_HEIGHT/2)-1)
     
-    sword1 = Sword("Wooden Sword", "Weakest Sword in the game", 10).materialize(scr,35,37)
-    
+    Sword("Wooden Sword", "Weakest Sword in the game", 1).materialize(scr,35,37)
+    Armor("wooden Armor", "Weakest Armor in the game", 1).materialize(scr, 15,17)
     #Things that are part of the game world. Everything but the player.
 
     #create_panel(window)
