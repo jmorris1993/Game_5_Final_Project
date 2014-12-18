@@ -10,6 +10,8 @@ import time
 import random
 
 from Level import *
+from Room import *
+from Floor import *
 from Items import *
 from Potion import *
 from Money import *
@@ -45,6 +47,7 @@ class Screen (object):
         self._cx = cx    # the initial center tile position 
         self._cy = cy    #  of the screen
         self._things = []
+        self._color = level._color 
         # Background is black
         bg = Rectangle(Point(-20,-20),Point(WINDOW_WIDTH+20,WINDOW_HEIGHT+20))
         bg.setFill("white")
@@ -62,35 +65,66 @@ class Screen (object):
                 sy = (y-(cy-dy)) * TILE_SIZE
                 Image(Point(TILE_SIZE/2,TILE_SIZE/2),PLAYER)
                 if self.tile(x,y) == 0:
-                    elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),0)
-                    elt.setFill('lightgreen')
-                    elt.setOutline('lightgreen')
-                if self.tile(x,y) == 1:                    
-                    elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),1)
-                    elt.setFill('lightgreen')
-                    elt.setOutline('lightgreen')
+                    elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),0,sx/24,sy/24)
+                    elt.setFill(self._color[0])
+                    elt.setOutline(self._color[0])
+                elif self.tile(x,y) == 1:                    
+                    elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),1,sx/24,sy/24)
+                    elt.setFill(self._color[0])
+                    elt.setOutline(self._color[0])
                     elt.draw(window)
                     self._things.append(elt)
-                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),GRASS)
+                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,self._color[2])
                 elif self.tile(x,y) == 2:
-                    elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),2)
-                    elt.setFill('lightgreen')
-                    elt.setOutline('lightgreen')
+                    elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),2,sx/24,sy/24)
+                    elt.setFill(self._color[0])
+                    elt.setOutline(self._color[0])
                     elt.draw(window)
                     self._things.append(elt)
-                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),TREE)
+                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,self._color[3])
                 elif self.tile(x,y) == 3:
-                    elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),3)
-                    elt.setFill('darkgrey')
-                    elt.setOutline('darkgrey')
+                    elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),3,sx/24,sy/24)
+                    elt.setFill(self._color[1])
+                    elt.setOutline(self._color[1])
+                    elt.draw(window)
+                    self._things.append(elt)
+                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,self._color[4])
+                elif self.tile(x,y) == 4:
+                    elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),4,sx/24,sy/24)
+                    elt.setFill('black')
+                    elt.setOutline('black')
+                    elt.draw(window)
+                    self._things.append(elt)
+                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,DOOR_UP)
+                elif self.tile(x,y) == 5:
+                    elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),4,sx/24,sy/24)
+                    elt.setFill('black')
+                    elt.setOutline('black')
+                    elt.draw(window)
+                    self._things.append(elt)
+                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,DOOR_LEFT)
+                elif self.tile(x,y) == 6:
+                    elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),4,sx/24,sy/24)
+                    elt.setFill('black')
+                    elt.setOutline('black')
+                    elt.draw(window)
+                    self._things.append(elt)
+                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,DOOR_DOWN)
+                elif self.tile(x,y) == 7:
+                    elt = Rectangles(Point(sx,sy),Point(sx+TILE_SIZE,sy+TILE_SIZE),4,sx/24,sy/24)
+                    elt.setFill('black')
+                    elt.setOutline('black')
+                    elt.draw(window)
+                    self._things.append(elt)
+                    elt = Images(Point(sx+TILE_SIZE/2,sy+TILE_SIZE/2),sx/24,sy/24,DOOR_RIGHT)
                 self._things.append(elt)
                 elt.draw(window)
-                rect = Rectangle(Point(640,0),Point(800,24))
-                rect.setFill('white')
-                rect.setOutline('lightgrey')
-                rect.draw(window)
-                health = Image(Point(80,16),HEALTH)
-                health.draw(window)
+            rect = Rectangle(Point(640,0),Point(800,24))
+            rect.setFill('white')
+            rect.setOutline('lightgrey')
+            rect.draw(window)
+            health = Image(Point(80,16),HEALTH)
+            health.draw(window)
                 
 
     # return the tile at a given tile position
@@ -157,13 +191,6 @@ class EventQueue (object):
 # A simple event class that checks for user input.
 # It re-enqueues itself after the check.
 
-MOVE = {
-    'Left': (-1,0),
-    'Right': (1,0),
-    'Up' : (0,-1),
-    'Down' : (0,1)
-}
-
 class CheckInput (object):
     def __init__ (self,window,player):
         self._player = player
@@ -210,8 +237,11 @@ def main ():
                       WINDOW_WIDTH+WINDOW_RIGHTPANEL, WINDOW_HEIGHT,
                       autoflush=False)
                       
+    r_color = random.choice(['GREEN','RED','YELLOW','BLACK','BLUE'])
+    floor = Floor(COLOR[r_color])
+    room = Room(1,floor)
 
-    level = Level()
+    level = room._lvl
     log ("level created")
 
     scr = Screen(level,window,CX,CY)
