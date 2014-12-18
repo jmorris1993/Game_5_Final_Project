@@ -20,10 +20,10 @@ MOVE = {
 }
 
 EXITS = {
-	'North' : 1,
-	'East' : 2,
-	'South' : 3,
-	'West' : 4
+	'North' : (25, 10),
+	'West' : (10, 25),
+	'South' : (25, 40),
+	'East' : (40, 25)	
 }
 
 # Pixel size of the viewport

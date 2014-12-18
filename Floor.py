@@ -8,11 +8,13 @@ import random
 
 
 class Floor(Room):
-	def __init__(self, color, rooms):
+	def __init__(self, color, rooms,que):
 		self._color = color
 		self._num_rooms = rooms
 		self._room = {}
+		self._que = que
 		self.buildRooms()
+		
 
 	def clear(self):
 		pass
@@ -30,5 +32,5 @@ class Floor(Room):
 	def buildRooms(self):
 		for i in range(self._num_rooms):
 			print i
-			self._room[i] = Room(i, self._color)
+			self._room[i] = Room(i, self._color, self._que)
 			print self._room[i]._exits 

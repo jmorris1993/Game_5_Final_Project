@@ -60,11 +60,8 @@ class Player (Character):
                         obj = self._screen._things[i].add_value(self)
                         pot = self._screen._things[i]
                         self.heal(pot)
-                    
-                    
                     if self._screen._things[i].is_open_door():
                         clearall = True
-                        
                 if self._screen._things[i].is_closed_door():
                     self._screen._things[i].change_door(self._screen,self._window)
                 if self._screen._things[i] != self:
@@ -74,8 +71,8 @@ class Player (Character):
             if obj != None:
                 self._screen._things.remove(obj)
             if clearall:
-                self._screen.clear_scr()
-                self._screen
+                self._screen.clear_scr(self)
+                self._screen.redraw(self._floor, 1, EXITS['East'])
         else:
             print("I can't walk on that!")
 
@@ -99,3 +96,33 @@ class Player (Character):
         self.healthTile.undraw()
         self.health()
         self.healthStat.setText(str(self._health)+'/'+str(self._maxHealth))
+
+    def getHealth(self):
+        return (self._health, self._maxHealth, self.healthStat)
+
+    def setHealth(self, h):
+        self._health = h[0]
+        self._maxHealth = h[1]
+        self.healthStat = h[2]
+        self.health()
+
+    def getMoney(self):
+        self.current_money.undraw()
+        return (self._money, self.current_money)
+
+    def setMoney(self, m):
+        self._money = m[0]
+        self.current_money = m[1]
+        self.current_money.draw(self._window)
+
+    def copy_player(self):
+        h = self.getHealth()
+        m = self.getMoney()
+        p = Player("...what's your name, bub?...",self._window,self._floor)
+        p.setHealth(h)
+        p.setMoney(m)
+        return p
+
+    def setXY(self,x,y):
+        self._x = x
+        self.y = y

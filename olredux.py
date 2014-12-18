@@ -114,20 +114,19 @@ def create_panel (window):
 #
 def main ():
 
+    q = EventQueue()
     window = GraphWin("Olinland Redux", 
                       WINDOW_WIDTH+WINDOW_RIGHTPANEL, WINDOW_HEIGHT,
                       autoflush=False)
                       
     r_color = random.choice(['GREEN','RED','YELLOW','BLACK','BLUE'])
-    floor = Floor(COLOR[r_color],random.randint(1,10))
+    floor = Floor(COLOR[r_color],random.randint(1,10),q)
     print floor._room
     level = floor._room[0]._lvl
     log ("level created")
 
     scr = Screen(window,CX,CY,floor)
     log ("screen created")
-
-    q = EventQueue()
     
     #Computer Characters
     pinky = Scorpion("Pinky","A Scorpion").register(q,40).materialize(scr,30,30)
