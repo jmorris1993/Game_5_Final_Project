@@ -56,6 +56,12 @@ class Player (Character):
                         self.battle(scorp)
                     if self._screen._things[i].is_money():
                         obj = self._screen._things[i].add_value(self)
+                    if self._screen._things[i].is_potion():
+                        obj = self._screen._things[i].add_value(self)
+                        pot = self._screen._things[i]
+                        self.heal(pot)
+                    
+                    
                     if self._screen._things[i].is_open_door():
                         clearall = True
                         
@@ -82,6 +88,14 @@ class Player (Character):
 
     def battle(self, enemy):
         self._health = self._health - enemy.attack()
+        self.healthTile.undraw()
+        self.health()
+        self.healthStat.setText(str(self._health)+'/'+str(self._maxHealth))
+    
+    def heal(self, potion):
+        self._health = self._health + potion.get_Value()
+        if self._health > 12:
+            self._health = 12
         self.healthTile.undraw()
         self.health()
         self.healthStat.setText(str(self._health)+'/'+str(self._maxHealth))
