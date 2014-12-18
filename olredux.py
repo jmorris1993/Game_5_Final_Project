@@ -27,6 +27,7 @@ from graphics import *
 from UniVars import *
 from Rectangles import *
 from Armor import *
+from Boss import *
 
 # A helper function that lets you log information to the console
 # with some timing information. I found this super useful to 
@@ -133,7 +134,9 @@ def main ():
     #Computer Characters
     pinky = Scorpion("Pinky","A Scorpion").register(q,40).materialize(scr,30,30)
     #brain = Scorpion("Brain","A Scorpion with a big head").register(q,60).materialize(scr,12,30)
+    Boss("GUARD","A Boss").register(q,40).materialize(scr,25,15)
     
+   
     #Non-Player objects
     os = OlinStatue().materialize(scr,20,20)    
     
