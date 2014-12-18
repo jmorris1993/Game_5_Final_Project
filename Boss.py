@@ -18,7 +18,7 @@ class Boss (Character):
         self._things = things
         self._health = 5
 
-    def is_Boss (self):
+    def is_boss (self):
         return True
     
     def attack (self,q):

@@ -18,7 +18,7 @@ class Merchant (Character):
         self._cy = int(self._origin.getY())*2+1
         self._things = things
 
-    def is_Merchant (self):
+    def is_merchant (self):
         return True
 
     def move (self,dx,dy):
