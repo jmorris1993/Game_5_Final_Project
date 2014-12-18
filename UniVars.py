@@ -26,6 +26,8 @@ EXITS = {
 	'East' : (40, 25)	
 }
 
+LOC_EXITS = {v: k for k, v in EXITS.items()}
+
 # Pixel size of the viewport
 WINDOW_WIDTH = TILE_SIZE * VIEWPORT_WIDTH
 WINDOW_HEIGHT = TILE_SIZE * VIEWPORT_HEIGHT

@@ -160,8 +160,9 @@ def main ():
         q.dequeue_if_ready()
         # Time unit = 10 milliseconds
         time.sleep(0.01)
-    txt = Text(Point(VIEWPORT_WIDTH/2*24, VIEWPORT_HEIGHT/2*24),"You Lost!")
+    txt = Text(Point(VIEWPORT_WIDTH/2*24, VIEWPORT_WIDTH/2*24),"You Lost!")
     txt.draw(window)
+    update()
     time.sleep(3)
 
 

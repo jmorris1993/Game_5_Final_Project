@@ -145,31 +145,87 @@ class Screen (object):
     def window (self):
         return self._window
 
-    def redraw(self, floor,num, enter): 
+    def redraw(self, floor,num, exit): 
         self._room = floor.getRoom(num)
         self._level = self._room.getLvl()
         # Background is black
-        bg = Rectangle(Point(-20,-20),Point(WINDOW_WIDTH+20,WINDOW_HEIGHT+20))
-        bg.setFill("white")
-        bg.setOutline("black")
-        bg.draw(self._window)
+        # bg = Rectangle(Point(-20,-20),Point(WINDOW_WIDTH+20,WINDOW_HEIGHT+20))
+        # bg.setFill("white")
+        # bg.setOutline("black")
+        # bg.draw(self._window)
         window = self._window
+
+        if LOC_EXITS[exit] == 'North':
+            enter = EXITS['South']
+        elif LOC_EXITS[exit] == 'South':
+            enter = EXITS['North']
+        elif LOC_EXITS[exit] == 'East':
+            enter = EXITS['West']
+        elif LOC_EXITS[exit] == 'West':
+            enter = EXITS['East']
+
         (self._cx, self._cy) = enter
         cx = self._cx
         cy = self._cy
 
         if (self._cx, self._cy) == (40,25):
-            self.East_enter()
-
+            var = self.East_enter()
+        elif (self._cx, self._cy) == (25,40):
+            var = self.South_enter()
+        elif (self._cx, self._cy) == (10,25):
+            var = self.West_enter()
+        elif (self._cx, self._cy) == (25,10):
+            var = self.North_enter()
+        self.Enter(var)
 
     def East_enter(self):
+        print 'east'
+        cx = self._cx
+        cy = self._cy
+        dx = (VIEWPORT_WIDTH-1)/2
+        dy = (VIEWPORT_HEIGHT-1)/2
+        rany = (cy-dy,cy+dy+1)
+        ranx = (cx-VIEWPORT_WIDTH+1,cx+1)
+        return (rany,ranx)
+
+    def North_enter(self):
+        print 'north'
+        cx = self._cx
+        cy = self._cy
+        dx = (VIEWPORT_WIDTH-1)/2
+        dy = (VIEWPORT_HEIGHT-1)/2
+        rany = (cy,cy+VIEWPORT_HEIGHT)
+        ranx = (cx-dx,cx+dx+1)
+        return (rany,ranx)
+
+    def West_enter(self):
+        print 'west'
+        cx = self._cx
+        cy = self._cy
+        dx = (VIEWPORT_WIDTH-1)/2
+        dy = (VIEWPORT_HEIGHT-1)/2
+        rany = (cy-dy,cy+dy+1)
+        ranx = (cx,cx+VIEWPORT_WIDTH)
+        return (rany,ranx)
+
+    def South_enter(self):
+        print 'south'
+        cx = self._cx
+        cy = self._cy
+        dx = (VIEWPORT_WIDTH-1)/2
+        dy = (VIEWPORT_HEIGHT-1)/2
+        rany = (cy-VIEWPORT_HEIGHT+1,cy+1)
+        ranx = (cx-dx,cx+dx+1)
+        return (rany,ranx)
+
+    def Enter(self,var):
         window = self._window
         cx = self._cx
         cy = self._cy
         dx = (VIEWPORT_WIDTH-1)/2
         dy = (VIEWPORT_HEIGHT-1)/2
-        for y in range(cy-dy,cy+dy+1):
-            for x in range(cx-VIEWPORT_WIDTH+1,cx+1):
+        for y in range(var[0][0],var[0][1]):
+            for x in range(var[1][0],var[1][1]):
                 sx = (x-(cx-dx)) * TILE_SIZE
                 sy = (y-(cy-dy)) * TILE_SIZE
                 Image(Point(TILE_SIZE/2,TILE_SIZE/2),PLAYER)
@@ -234,8 +290,16 @@ class Screen (object):
             rect.draw(window)
             health = Image(Point(80,16),HEALTH)
             health.draw(window)
+            self._things[0].current_money.undraw()
+            self._things[0].current_money.draw(window)
+            self._things[0].current_attack.undraw()
+            self._things[0].current_attack.draw(window)
+            self._things[0].current_defense.undraw()
+            self._things[0].current_defense.draw(window)
+            self._things[0].health()
             self._room.buildObj(self)
             self._things[0]._sprite.undraw()
+            print (cx,cy)
             self._things[0].setXY(cx,cy)
             self._things[0]._sprite.draw(window)
         self._room_T[self._room_num] = self._things

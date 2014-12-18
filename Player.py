@@ -74,6 +74,8 @@ class Player (Character):
                         self.heal(pot)
                     if self._screen._things[i].is_open_door():
                         clearall = True
+                        exitx = self._screen._things[i]._x
+                        exity = self._screen._things[i]._y
                 if self._screen._things[i].is_closed_door():
                     self._screen._things[i].change_door(self._screen,self._window)
                 if self._screen._things[i] != self:
@@ -84,7 +86,7 @@ class Player (Character):
                 self._screen._things.remove(obj)
             if clearall:
                 self._screen.clear_scr(self)
-                self._screen.redraw(self._floor, 1, EXITS['East'])
+                self._screen.redraw(self._floor, 1, (exitx,exity))
         else:
             print("I can't walk on that!")
 
@@ -94,6 +96,8 @@ class Player (Character):
         self.healthTile.setFill('red')
         self.healthTile.setOutline('red')
         self.healthTile.draw(self._window)
+        self.healthStat.undraw()
+        self.healthStat.draw(self._window)
 
     def battle(self, enemy):
         self._health = self._health - enemy.attack()
@@ -137,4 +141,4 @@ class Player (Character):
 
     def setXY(self,x,y):
         self._x = x
-        self.y = y
+        self._y = y
