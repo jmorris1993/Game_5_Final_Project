@@ -6,16 +6,17 @@ from Level import *
 import random
 
 class Room (Level):
-	def __init__(self, number, floor):
-		self._floor = floor
-		self._color = floor._color
+	def __init__(self, number, color):
+		self._color = color
 		self._number = number
 		self._exits = random.sample(xrange(1,4), random.randrange(1,4))
-		print self._exits
-		self.create(self._exits)
+		self.create()
 
-	def create(self, exits):
-		self._lvl = Level(exits,self._color)
+	def create(self):
+		self._lvl = Level(self._exits,self._color)
+
+	def getLvl(self):
+		return self._lvl
 
 	def clear(self):
 		pass

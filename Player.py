@@ -13,7 +13,7 @@ from graphics import *
 # The Player character
 #
 class Player (Character):
-    def __init__ (self,name,window):
+    def __init__ (self,name,window,floor):
         Character.__init__(self,name,"Yours truly")
         log("Player.__init__ for "+str(self))
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),PLAYER)
@@ -27,6 +27,8 @@ class Player (Character):
         self.healthStat.setStyle('bold')
         self.healthStat.draw(window)
         self.health()
+
+        self._floor = floor
 
 
     def is_player (self):
@@ -45,7 +47,7 @@ class Player (Character):
         tempx += dx
         tempy += dy
         obj = None
-        print(tempx,tempy)
+        clearall = False
         if self._screen.tile(tempx,tempy) == 1 or self._screen.tile(tempx,tempy) == 0 or self._screen.tile(tempx,tempy) == 4 or self._screen.tile(tempx,tempy) == 5 or self._screen.tile(tempx,tempy) == 6 or self._screen.tile(tempx,tempy) == 7:
             for i in range(len(self._screen._things)):
                 if self._screen._things[i]._x == tempx and self._screen._things[i]._y == tempy:
@@ -55,8 +57,8 @@ class Player (Character):
                     if self._screen._things[i].is_money():
                         obj = self._screen._things[i].add_value(self)
                     if self._screen._things[i].is_open_door():
-                        print 'Active'
-                        self._screen.clear_scr()
+                        clearall = True
+                        
                 if self._screen._things[i].is_closed_door():
                     self._screen._things[i].change_door(self._screen,self._window)
                 if self._screen._things[i] != self:
@@ -65,6 +67,9 @@ class Player (Character):
                     self._y = tempy
             if obj != None:
                 self._screen._things.remove(obj)
+            if clearall:
+                self._screen.clear_scr()
+                self._screen
         else:
             print("I can't walk on that!")
 

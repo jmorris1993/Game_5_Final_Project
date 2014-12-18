@@ -34,6 +34,7 @@ from UniVars import *
 class Level (object):
     def __init__ (self,exits,color):
         size = LEVEL_WIDTH * LEVEL_HEIGHT
+        print exits
         self._color = color
         map = [0] * size
         for i in range(100):
@@ -49,7 +50,8 @@ class Level (object):
             else:
                 map[i * LEVEL_WIDTH + disp_x / 2 + 1 + (disp_y + 1) / 2 * LEVEL_HEIGHT] = 3
                 map[i * LEVEL_WIDTH + VIEWPORT_WIDTH + disp_x / 2 + (disp_y + 1) / 2 * LEVEL_HEIGHT] = 3
-        map[LEVEL_WIDTH*disp_y/2+LEVEL_WIDTH] = 4
+        if exits:
+            map[LEVEL_WIDTH*disp_y/2+LEVEL_WIDTH] = 4
         map[LEVEL_WIDTH*(VIEWPORT_HEIGHT+disp_y)/2+disp_x/2+1] = 5
         map[LEVEL_WIDTH*(VIEWPORT_HEIGHT+disp_y/2)+LEVEL_WIDTH/2] = 6
         map[LEVEL_WIDTH*(VIEWPORT_HEIGHT+disp_y)/2+LEVEL_WIDTH-disp_x/2-1] = 7
