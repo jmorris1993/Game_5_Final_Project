@@ -20,7 +20,7 @@ class Bow (Equipment):
     # A character has a move() method that you should implement
     # to enable movement  
 
-    def is_Bow (self):
+    def is_bow (self):
         return True
 
     def is_walkable (self):

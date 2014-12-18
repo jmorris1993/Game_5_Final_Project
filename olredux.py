@@ -26,6 +26,8 @@ from Character import *
 from graphics import *
 from UniVars import *
 from Rectangles import *
+from Armor import *
+
 # A helper function that lets you log information to the console
 # with some timing information. I found this super useful to 
 # debug tricky event-based problems.
@@ -143,8 +145,8 @@ def main ():
         Potion("Potion", "Can be used to heal Player.",10).materialize(scr,random.randint(
             LEVEL_WIDTH/2-VIEWPORT_WIDTH/2+1,LEVEL_WIDTH/2+VIEWPORT_WIDTH/2-1),random.randint(LEVEL_HEIGHT/2-VIEWPORT_HEIGHT/2+3,LEVEL_HEIGHT/2+VIEWPORT_HEIGHT/2)-1)
     
-    sword1 = Sword("Wooden Sword", "Weakest Sword in the game", 10).materialize(scr,35,37)
-    
+    Sword("Wooden Sword", "Weakest Sword in the game", 1).materialize(scr,35,37)
+    Armor("wooden Armor", "Weakest Armor in the game", 1).materialize(scr, 15,17)
     #Things that are part of the game world. Everything but the player.
 
     #create_panel(window)
@@ -153,11 +155,14 @@ def main ():
 
     q.enqueue(1,CheckInput(window,p))
 
-    while True:
+    while p._health > 0:
         # Grab the next event from the queue if it's ready
         q.dequeue_if_ready()
         # Time unit = 10 milliseconds
         time.sleep(0.01)
+    txt = Text(Point(VIEWPORT_WIDTH/2*24, VIEWPORT_HEIGHT/2*24),"You Lost!")
+    txt.draw(window)
+    time.sleep(3)
 
 
 

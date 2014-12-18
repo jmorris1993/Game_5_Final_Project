@@ -15,7 +15,7 @@ class Items (Thing):
     # A character has a move() method that you should implement
     # to enable movement
 
-    def is_Item (self):
+    def is_item (self):
         return True
 
     def is_walkable (self):

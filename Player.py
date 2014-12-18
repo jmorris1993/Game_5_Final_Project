@@ -19,14 +19,21 @@ class Player (Character):
         self._sprite = Image(Point(TILE_SIZE/2,TILE_SIZE/2),PLAYER)
         self._window = window
         self._money = 0
+        self._attack = 1
+        self._defense = 1
         self.current_money=Text(Point(697,12),"Rupees: " + str(self._money))
         self.current_money.draw(self._window)
+        self.current_attack=Text(Point(200,12),"Attack: " + str(self._attack))
+        self.current_attack.draw(self._window)
+        self.current_defense=Text(Point(300,12),"Defense: " + str(self._defense))
+        self.current_defense.draw(self._window)
         self._health = 12
         self._maxHealth = self._health
         self.healthStat = Text(Point(80,40),str(self._health)+'/'+str(self._maxHealth))
         self.healthStat.setStyle('bold')
         self.healthStat.draw(window)
         self.health()
+        
 
         self._floor = floor
 
@@ -56,6 +63,11 @@ class Player (Character):
                         self.battle(scorp)
                     if self._screen._things[i].is_money():
                         obj = self._screen._things[i].add_value(self)
+                    
+                    if self._screen._things[i].is_sword():
+                        obj = self._screen._things[i].add_attack(self)
+                    if self._screen._things[i].is_armor():
+                        obj = self._screen._things[i].add_defense(self)
                     if self._screen._things[i].is_potion():
                         obj = self._screen._things[i].add_value(self)
                         pot = self._screen._things[i]
