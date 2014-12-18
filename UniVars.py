@@ -35,7 +35,7 @@ WINDOW_HEIGHT = TILE_SIZE * VIEWPORT_HEIGHT
 # Pixel size of the panel on the right where you can display stuff
 WINDOW_RIGHTPANEL = 0
 
-PLAYER = 't_android_red.gif'
+PLAYER = 'ghost.gif'
 MONEY = 'money.gif'
 MONEY5 = 'money5.gif'
 MONEY50 = 'money50.gif'
